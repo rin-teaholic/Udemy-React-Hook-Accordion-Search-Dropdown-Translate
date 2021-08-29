@@ -2,7 +2,9 @@ import React, {useState} from 'react'
 import Accordion from './components/Accordion'
 import Search from './components/Search'
 import Dropdown from './components/Dropdown'
-
+import Translate from './components/Translate'
+import Route from './components/Route'
+import Header from './components/Header'
 
 const items = [
   {
@@ -32,23 +34,31 @@ const options = [
     label: 'a shade of blue',
     value: 'blue'
   }
-
 ]
 
 export default () => {
-  const [selected, setSelected] = useState(options[0])
-  const [showDropdown, setShowDropdown] = useState(true)
+  const [selected, serSelected] = useState(options[0])
 
   return (
     <div>
-      <button onClick={() => {
-        setShowDropdown(!showDropdown)
-      }}>to</button>
-      {showDropdown ? 
+      <Header />
+      <Route path="/">
+        <Accordion items={items} />
+      </Route>
+      <Route path="/list">
+        <Search />
+      </Route>
+      <Route path="/dropdown">
         <Dropdown
-        selected={selected}
-        onSelectedChange={setSelected}
-        options={options} /> : null}
-    </div>
+          label="Select a color"
+          options={options}
+          selected={selected}
+          onSelectedChange={serSelected}
+        />
+      </Route>
+      <Route path="/translate">
+        <Translate />
+      </Route>
+      </div>
   )
 }
